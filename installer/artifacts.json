@@ -1,0 +1,689 @@
+{
+  "schemaVersion": 1,
+  "pythonVersion": "3.13.17",
+  "pythonPth": "python313._pth",
+  "artifacts": [
+    {
+      "id": "vc-runtime",
+      "kind": "model",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/ebdab8e5-1d7b-4d9f-a11b-cbb1720c3b12/843068991DAAA1F73AD9F6239BCE4D0F6A07A51F18C37EA2A867E9BECA71295C/VC_redist.x64.exe",
+      "sha256": "843068991daaa1f73ad9f6239bce4d0f6a07a51f18c37ea2a867e9beca71295c",
+      "size": 18731856,
+      "destination": "runtime/support/VC_redist.x64.exe"
+    },
+    {
+      "id": "node-24-22-1-win-x64",
+      "kind": "node",
+      "url": "https://mirrors.aliyun.com/nodejs-release/v24.22.1/node-v24.22.1-win-x64.zip",
+      "sha256": "d2046d28c2c3dcd211ac5145c0bf30e2047ef9dfb306693c8c6e2eccd8b95fa5",
+      "size": 37748064,
+      "destination": "runtime/node",
+      "stripPrefix": "node-v24.22.1-win-x64",
+      "urls": [
+        "https://nodejs.org/dist/v24.22.1/node-v24.22.1-win-x64.zip"
+      ]
+    },
+    {
+      "id": "python-3-13-17-embed-amd64",
+      "kind": "python",
+      "url": "https://www.python.org/ftp/python/3.13.17/python-3.13.17-embed-amd64.zip",
+      "sha256": "9e35319bffedab8b36ad44d8f377cb4f1733bcec257a0b6d04d94f01486ddb38",
+      "size": 11441267,
+      "destination": "runtime/python"
+    },
+    {
+      "id": "wheel-aiohappyeyeballs-2-7-1-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/71/43/1947f06babed6b3f1d7f38b0c767f52df66bfb2bc10b468c4a7de9eceff2/aiohappyeyeballs-2.7.1-py3-none-any.whl",
+      "sha256": "9243213661e29250eb41368e5daa826fc017156c3b8a11440826b2e3ed376472",
+      "size": 15038,
+      "destination": "runtime/python/Lib/site-packages",
+      "urls": [
+        "https://files.pythonhosted.org/packages/71/43/1947f06babed6b3f1d7f38b0c767f52df66bfb2bc10b468c4a7de9eceff2/aiohappyeyeballs-2.7.1-py3-none-any.whl",
+        "https://mirrors.aliyun.com/pypi/packages/71/43/1947f06babed6b3f1d7f38b0c767f52df66bfb2bc10b468c4a7de9eceff2/aiohappyeyeballs-2.7.1-py3-none-any.whl"
+      ]
+    },
+    {
+      "id": "wheel-aiohttp-3-14-5-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/8d/d0/8eca2c65aa467320990d78fb2005f38ed3588944280c39ff9deb6423fef1/aiohttp-3.14.5-cp313-cp313-win_amd64.whl",
+      "sha256": "d05e94cdfe0d15d0206f970722d2554780ce562787b21b218b275447f8751319",
+      "size": 505985,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-aiosignal-1-4-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/fb/76/641ae371508676492379f16e2fa48f4e2c11741bd63c48be4b12a6b09cba/aiosignal-1.4.0-py3-none-any.whl",
+      "sha256": "053243f8b92b990551949e63930a839ff0cf0b0ebbe0597b0f3fb19e1a0fe82e",
+      "size": 7490,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-anyio-4-15-1-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/12/b8/4bd346e22b28902df4d651910f5242c28d84e4a5c2435ca5c3f797ed7e2e/anyio-4.15.1-py3-none-any.whl",
+      "sha256": "6152fdbbf9a77fdec97731721bebf7c4c44f7c29b424b0065826173efc7ed101",
+      "size": 132079,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-attrs-26-1-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl",
+      "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+      "size": 67548,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-av-18-1-0-cp311-abi3-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/33/b4/76ba21e46704f632004276b85289a1582e95f5eff760436d6149875a1881/av-18.1.0-cp311-abi3-win_amd64.whl",
+      "sha256": "ea1480b7a8d5405cb5f382b344731bf125fd2c1c6fae3964f6c48595628387ff",
+      "size": 27595679,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-certifi-2026-10-19-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/c4/51/29046e48f693c54e5b7412216d447a1d8362c9653148d98c02cdf65fa733/certifi-2026.10.19-py3-none-any.whl",
+      "sha256": "42d35340cc5b9ba78e818ddbff0c5b1c2b779de448a340fd1b989f5fa8670e1b",
+      "size": 136464,
+      "destination": "runtime/python/Lib/site-packages",
+      "urls": [
+        "https://files.pythonhosted.org/packages/c4/51/29046e48f693c54e5b7412216d447a1d8362c9653148d98c02cdf65fa733/certifi-2026.10.19-py3-none-any.whl",
+        "https://mirrors.aliyun.com/pypi/packages/c4/51/29046e48f693c54e5b7412216d447a1d8362c9653148d98c02cdf65fa733/certifi-2026.10.19-py3-none-any.whl"
+      ]
+    },
+    {
+      "id": "wheel-cffi-2-1-1-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/60/a6/8b149b2c3f2e11aaa1618ef64500b45f50f22c57a977a4dff1aff1f91042/cffi-2.1.1-cp313-cp313-win_amd64.whl",
+      "sha256": "1aa5645c30469b09530c4ebca77ebf8f17618293c58f8549cb1a543a50236e7d",
+      "size": 185688,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-charset-normalizer-3-5-2-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/9c/76/b8ec57f4e9ee3253541abf95e4a462c0175fe8032dcd070f1f2421240942/charset_normalizer-3.5.2-cp313-cp313-win_amd64.whl",
+      "sha256": "78456a747de8dc58360ffa581f30a002baf5aa28cb262536545e91f113ed7639",
+      "size": 206489,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-click-8-5-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/58/50/6c0d534c5f134586a8e1ba4e330569e32f057e33372ae556463212fb4cd3/click-8.5.0-py3-none-any.whl",
+      "sha256": "255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360",
+      "size": 125251,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-cloudpickle-3-1-2-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/88/39/799be3f2f0f38cc727ee3b4f1445fe6d5e4133064ec2e4115069418a5bb6/cloudpickle-3.1.2-py3-none-any.whl",
+      "sha256": "9acb47f6afd73f60dc1df93bb801b472f05ff42fa6c84167d25cb206be1fbf4a",
+      "size": 22228,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-colorama-0-4-6-py2-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl",
+      "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6",
+      "size": 25335,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-ctranslate2-4-8-3-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/1d/d0/86d89881ffaa29ac54bb01a2da0b0680d39a9b737f5d0f799056ffc00bfe/ctranslate2-4.8.3-cp313-cp313-win_amd64.whl",
+      "sha256": "c3c5d19b83df19f9f708ed16145fbc20b06827462f1a68c5286efc0ad41aa0c1",
+      "size": 19230496,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-dlinfo-2-0-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/da/90/022c79d6e5e6f843268c10b84d4a021ee3afba0621d3c176d3ff2024bfc8/dlinfo-2.0.0-py3-none-any.whl",
+      "sha256": "b32cc18e3ea67c0ca9ca409e5b41eed863bd1363dbc9dd3de90fedf11b61e7bc",
+      "size": 3654,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-edge-tts-7-3-1-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/35/86/3b97d755992777d5a9ca0e45a8ec96cc9858b2d6dd8f65f3f688d60e8709/edge_tts-7.3.1-py3-none-any.whl",
+      "sha256": "2a3c79d6235a7a736d681233823ce5492e829b43eb47beae49aa181237a8f9a4",
+      "size": 38908,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-espeakng-loader-0-2-4-py3-none-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/9d/ed/a3d872fbad4f3a3f3db0e8c31768ab14e77cd77306de16b8b20b1e1df7ea/espeakng_loader-0.2.4-py3-none-win_amd64.whl",
+      "sha256": "41f1e08ac9deda2efd1ea9de0b81dab9f5ae3c4b24284f76533d0a7b1dd7abd7",
+      "size": 9437292,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-faster-whisper-1-2-1-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/05/99/49ee85903dee060d9f08297b4a342e5e0bcfca2f027a07b4ee0a38ab13f9/faster_whisper-1.2.1-py3-none-any.whl",
+      "sha256": "79a66ad50688c0b794dd501dc340a736992a6342f7f95e5811be60b5224a26a7",
+      "size": 1118909,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-filelock-4-2-4-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/e0/1b/5e74289a1878e666bb4b65fe5805a04cafcac2aa5f519ef1ead67ef91c56/filelock-4.2.4-py3-none-any.whl",
+      "sha256": "301241438c57936ef93f4243a94f2559022268bfcf9b375a9a72eb0f8db8358e",
+      "size": 162475,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-flatbuffers-25-12-19-py2-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl",
+      "sha256": "7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4",
+      "size": 26661,
+      "destination": "runtime/python/Lib/site-packages",
+      "urls": [
+        "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl",
+        "https://mirrors.aliyun.com/pypi/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl"
+      ]
+    },
+    {
+      "id": "wheel-frozenlist-1-8-0-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/d8/cf/174c91dbc9cc49bc7b7aab74d8b734e974d1faa8f191c74af9b7e80848e6/frozenlist-1.8.0-cp313-cp313-win_amd64.whl",
+      "sha256": "878be833caa6a3821caf85eb39c5ba92d28e85df26d57afb06b35b2efd937231",
+      "size": 43882,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-fsspec-2026-9-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/6c/c0/a98505f18594f1bce828bb159cec0fcf9860562f1a2c85913409fc8f3d9e/fsspec-2026.9.0-py3-none-any.whl",
+      "sha256": "8dd6e646e99ea382bd85f97a45e6b526a442d79423a7dc673f1e2756d05fcb5f",
+      "size": 221738,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-h11-0-16-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl",
+      "sha256": "63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86",
+      "size": 37515,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-hf-xet-1-7-0-cp38-abi3-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/4d/59/b35106dfa71b6eef605dc88bd038fe99c7f86fb132a15b60d0bf2f235b2c/hf_xet-1.7.0-cp38-abi3-win_amd64.whl",
+      "sha256": "2b7bb5727889b0f2436dbaaad8fc4c3e66b8240d992716989e0c086b4278b1bc",
+      "size": 3822644,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-httpcore-1-0-9-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl",
+      "sha256": "2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55",
+      "size": 78784,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-httpx-0-28-1-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl",
+      "sha256": "d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad",
+      "size": 73517,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-huggingface-hub-1-30-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/c3/0e/3e45bbe0dd48f4e56b1d46649d342de853cd1c7e815323472ab62687f153/huggingface_hub-1.30.0-py3-none-any.whl",
+      "sha256": "96ae0a8e99a234374a6fe43e989ebd21c04640b91ab2927e7e5773ba1131ca59",
+      "size": 796795,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-idna-3-20-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl",
+      "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c",
+      "size": 69583,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-joblib-1-6-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/18/53/84099323c2ec4be98d935f63c033ac4151ee83836ca1050ede3b3aadf155/joblib-1.6.0-py3-none-any.whl",
+      "sha256": "3dbbf9f6e4b592a2357b854608e980fe6390d131d7a82f011a377ef2ebef7aba",
+      "size": 306115,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-kokoro-onnx-0-6-1-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/60/e1/a27e5a70a525a5ee1fd5357596f07b724d02ff317f134e86cb6e3d9db968/kokoro_onnx-0.6.1-py3-none-any.whl",
+      "sha256": "50c8de4950d601df41428ee5462a48c8a78bef441bf671f2492e070ef44d8a32",
+      "size": 26084,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-multidict-7-1-0-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/4f/19/b26bdbef5bf5071ea5a3ba37c963af187fddb8b0a925bd39c0c5dd0ad04a/multidict-7.1.0-cp313-cp313-win_amd64.whl",
+      "sha256": "7de54b49e6da811b0321e412d14efdaa1ee0c0b6609296ea5b9022bc5b2bd843",
+      "size": 93554,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-numpy-2-4-6-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/b5/cd/9cc4dc876fb065d5c220aae4d5e14826b2715331bb7618ce1fb07a679d99/numpy-2.4.6-cp313-cp313-win_amd64.whl",
+      "sha256": "c4fc99836233ea196540b17ab0983aff60ed07941751930f5f4d05bc3b3b7359",
+      "size": 12318598,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-onnxruntime-1-29-0-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/e1/3b/66b424c63fa92dfaa48d1719efaae66fc8c256b9426a832eda51d8dfe1e9/onnxruntime-1.29.0-cp313-cp313-win_amd64.whl",
+      "sha256": "2945e1f82f81f27e88decea88c7861f45baea23818950d467bf3909aa303119e",
+      "size": 14001310,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-packaging-26-3-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "size": 129956,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-phonemizer-3-4-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/37/41/09bafd0ccf4f4ddd1530c9f9d10e75a24056e10e120b9daa97f691fcabc3/phonemizer-3.4.0-py3-none-any.whl",
+      "sha256": "5ff1215d0efa3606dd1b92449f6d71b5c1741efcc84c6d40c17bfaf64f6ded5f",
+      "size": 108529,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-propcache-0-5-4-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/01/bc/e0a7b84af04ec02d73a48aa71f091e1e4a2107e3074b7ce12195b66901f4/propcache-0.5.4-cp313-cp313-win_amd64.whl",
+      "sha256": "0c889f6fa84957bc7e8b4eab71fd16a0455068d5045e3aa40c733071d2b2fd77",
+      "size": 45342,
+      "destination": "runtime/python/Lib/site-packages",
+      "urls": [
+        "https://files.pythonhosted.org/packages/01/bc/e0a7b84af04ec02d73a48aa71f091e1e4a2107e3074b7ce12195b66901f4/propcache-0.5.4-cp313-cp313-win_amd64.whl",
+        "https://mirrors.aliyun.com/pypi/packages/01/bc/e0a7b84af04ec02d73a48aa71f091e1e4a2107e3074b7ce12195b66901f4/propcache-0.5.4-cp313-cp313-win_amd64.whl"
+      ]
+    },
+    {
+      "id": "wheel-protobuf-7-36-2-cp310-abi3-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/8a/55/b77bda4e5e5f5971fb51b07663694690e9afdb9402136c16a522bd621cad/protobuf-7.36.2-cp310-abi3-win_amd64.whl",
+      "sha256": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353",
+      "size": 456514,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-pycparser-3-12-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/b6/ae/315bbeee126a769cbde43cf4908acb4b40408d8bf8bbf334dd7368d8dadf/pycparser-3.12-py3-none-any.whl",
+      "sha256": "a076f3f489b39b43ed13563a1dafe42447445bec2e294154ec5c57fcdda4c85e",
+      "size": 62600,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-pyyaml-6-0-3-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/97/c9/39d5b874e8b28845e4ec2202b5da735d0199dbe5b8fb85f91398814a9a46/pyyaml-6.0.3-cp313-cp313-win_amd64.whl",
+      "sha256": "79005a0d97d5ddabfeeea4cf676af11e647e41d81c9a7722a193022accdb6b7c",
+      "size": 154090,
+      "destination": "runtime/python/Lib/site-packages",
+      "urls": [
+        "https://files.pythonhosted.org/packages/97/c9/39d5b874e8b28845e4ec2202b5da735d0199dbe5b8fb85f91398814a9a46/pyyaml-6.0.3-cp313-cp313-win_amd64.whl",
+        "https://mirrors.aliyun.com/pypi/packages/97/c9/39d5b874e8b28845e4ec2202b5da735d0199dbe5b8fb85f91398814a9a46/pyyaml-6.0.3-cp313-cp313-win_amd64.whl"
+      ]
+    },
+    {
+      "id": "wheel-requests-2-34-2-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl",
+      "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+      "size": 73075,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-soundfile-0-14-0-py2-py3-none-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/ed/97/b39c18ac1df45e755ca22b8b00e872929da5d107998a207a5e4ac831bfda/soundfile-0.14.0-py2.py3-none-win_amd64.whl",
+      "sha256": "299491d3499460fb1b74bb4bd78b57ffc2d243a5fafa7b6ec1b264875c78453e",
+      "size": 1021480,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-tabulate-0-10-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/99/55/db07de81b5c630da5cbf5c7df646580ca26dfaefa593667fc6f2fe016d2e/tabulate-0.10.0-py3-none-any.whl",
+      "sha256": "f0b0622e567335c8fabaaa659f1b33bcb6ddfe2e496071b743aa113f8774f2d3",
+      "size": 39814,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-tokenizers-0-23-2-cp310-abi3-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/db/f7/0a69ac6b82dbccf3f71add938a161c497952749294b8dd6dfe03a819dc40/tokenizers-0.23.2-cp310-abi3-win_amd64.whl",
+      "sha256": "2e96f5699d5249c9c64aa8412e044f727aae3a4098cf830f9901ec1afc361cde",
+      "size": 2863236,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-tqdm-4-70-1-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/a7/03/921a3d3c75785aca9ebfbfcabfbc3a1be12e2ab5265deb026d55a5a3f83e/tqdm-4.70.1-py3-none-any.whl",
+      "sha256": "c293e525e6fef9c20e8728fd4612df02a0aa31bb5fe91ecd93e123b1b7bffa73",
+      "size": 80199,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-typing-extensions-4-16-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "size": 45571,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-urllib3-2-8-0-py3-none-any",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl",
+      "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3",
+      "size": 135717,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "wheel-yarl-1-25-1-cp313-cp313-win-amd64",
+      "kind": "wheel",
+      "url": "https://files.pythonhosted.org/packages/3a/8f/4db01cef62caff0d7a4593ed694fb8a41a27a11158cab80d290221f13e57/yarl-1.25.1-cp313-cp313-win_amd64.whl",
+      "sha256": "1f51020b2eb8a003c84925638ec63c21a750a4bddd3a22ec8eac6a742dadf1b9",
+      "size": 101945,
+      "destination": "runtime/python/Lib/site-packages"
+    },
+    {
+      "id": "model-kokoro-v1-0",
+      "kind": "model",
+      "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.0.onnx",
+      "sha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+      "size": 325505369,
+      "destination": "runtime/tts/kokoro/kokoro-v1.0.onnx",
+      "urls": [
+        "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.0.onnx",
+        "https://huggingface.co/kanirudh/kokoro-82m-onnx/resolve/be37f7d55632acf0b6b4a17eb4cf673c06dcebed/kokoro-v1.0.onnx",
+        "https://hf-mirror.com/kanirudh/kokoro-82m-onnx/resolve/be37f7d55632acf0b6b4a17eb4cf673c06dcebed/kokoro-v1.0.onnx"
+      ]
+    },
+    {
+      "id": "model-onnx-community-kokoro-82m-v1-0-onnx-readme-md",
+      "kind": "model",
+      "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+      "sha256": "b8fd888b4782f4d4ae85e2f1587cafd727037f4f138f72429ef1bd5908c0e9d8",
+      "size": 10627,
+      "destination": "runtime/tts/kokoro/README.md",
+      "urls": [
+        "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+        "https://hf-mirror.com/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md"
+      ]
+    },
+    {
+      "id": "model-onnx-community-kokoro-82m-v1-0-onnx-voices-af-heart-bin",
+      "kind": "model",
+      "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/af_heart.bin",
+      "sha256": "d583ccff3cdca2f7fae535cb998ac07e9fcb90f09737b9a41fa2734ec44a8f0b",
+      "size": 522240,
+      "destination": "runtime/tts/kokoro/voices/af_heart.bin",
+      "urls": [
+        "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/af_heart.bin",
+        "https://hf-mirror.com/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/af_heart.bin"
+      ]
+    },
+    {
+      "id": "model-onnx-community-kokoro-82m-v1-0-onnx-voices-af-sky-bin",
+      "kind": "model",
+      "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/af_sky.bin",
+      "sha256": "4435255c9744f3f31659e0d714ab7689bf65d9e77ec1cce060f083912614f0b9",
+      "size": 522240,
+      "destination": "runtime/tts/kokoro/voices/af_sky.bin",
+      "urls": [
+        "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/af_sky.bin",
+        "https://hf-mirror.com/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/af_sky.bin"
+      ]
+    },
+    {
+      "id": "model-onnx-community-kokoro-82m-v1-0-onnx-voices-jf-alpha-bin",
+      "kind": "model",
+      "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/jf_alpha.bin",
+      "sha256": "56b479360aad9f367aeb8cef908f9201cf48b4555e488c5f4590c9dfcd978bb6",
+      "size": 522240,
+      "destination": "runtime/tts/kokoro/voices/jf_alpha.bin",
+      "urls": [
+        "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/jf_alpha.bin",
+        "https://hf-mirror.com/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/jf_alpha.bin"
+      ]
+    },
+    {
+      "id": "model-dropbox-dash-faster-whisper-large-v3-turbo-readme-md",
+      "kind": "model",
+      "url": "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/README.md",
+      "sha256": "b3068692728faed23580cce5cd569fc47ff76c690c032b2641ffd5554ea64d8f",
+      "size": 1445,
+      "destination": "runtime/asr/large-v3-turbo/README.md",
+      "urls": [
+        "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/README.md",
+        "https://hf-mirror.com/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/README.md"
+      ]
+    },
+    {
+      "id": "model-dropbox-dash-faster-whisper-large-v3-turbo-config-json",
+      "kind": "model",
+      "url": "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/config.json",
+      "sha256": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e",
+      "size": 2263,
+      "destination": "runtime/asr/large-v3-turbo/config.json",
+      "urls": [
+        "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/config.json",
+        "https://hf-mirror.com/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/config.json"
+      ]
+    },
+    {
+      "id": "model-dropbox-dash-faster-whisper-large-v3-turbo-model-bin",
+      "kind": "model",
+      "url": "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/model.bin",
+      "sha256": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da",
+      "size": 1617884929,
+      "destination": "runtime/asr/large-v3-turbo/model.bin",
+      "urls": [
+        "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/model.bin",
+        "https://hf-mirror.com/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/model.bin"
+      ]
+    },
+    {
+      "id": "model-dropbox-dash-faster-whisper-large-v3-turbo-preprocessor-config-json",
+      "kind": "model",
+      "url": "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/preprocessor_config.json",
+      "sha256": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "size": 340,
+      "destination": "runtime/asr/large-v3-turbo/preprocessor_config.json",
+      "urls": [
+        "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/preprocessor_config.json",
+        "https://hf-mirror.com/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/preprocessor_config.json"
+      ]
+    },
+    {
+      "id": "model-dropbox-dash-faster-whisper-large-v3-turbo-tokenizer-json",
+      "kind": "model",
+      "url": "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/tokenizer.json",
+      "sha256": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd",
+      "size": 2710337,
+      "destination": "runtime/asr/large-v3-turbo/tokenizer.json",
+      "urls": [
+        "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/tokenizer.json",
+        "https://hf-mirror.com/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/tokenizer.json"
+      ]
+    },
+    {
+      "id": "model-dropbox-dash-faster-whisper-large-v3-turbo-vocabulary-json",
+      "kind": "model",
+      "url": "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/vocabulary.json",
+      "sha256": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1",
+      "size": 1068114,
+      "destination": "runtime/asr/large-v3-turbo/vocabulary.json",
+      "urls": [
+        "https://huggingface.co/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/vocabulary.json",
+        "https://hf-mirror.com/dropbox-dash/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/vocabulary.json"
+      ]
+    },
+    {
+      "id": "model-systran-faster-whisper-base-en-readme-md",
+      "kind": "model",
+      "url": "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/README.md",
+      "sha256": "0360e1518671daf4064d44121ad1c4bbb0446dd5b0f8c724c8d3132fd33a1540",
+      "size": 1323,
+      "destination": "runtime/asr/base.en/README.md",
+      "urls": [
+        "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/README.md",
+        "https://hf-mirror.com/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/README.md"
+      ]
+    },
+    {
+      "id": "model-systran-faster-whisper-base-en-config-json",
+      "kind": "model",
+      "url": "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/config.json",
+      "sha256": "f3bc3821e9fc76a27bae538e11ae5b677dcdd352b4600429ce7951d398569aeb",
+      "size": 2227,
+      "destination": "runtime/asr/base.en/config.json",
+      "urls": [
+        "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/config.json",
+        "https://hf-mirror.com/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/config.json"
+      ]
+    },
+    {
+      "id": "model-systran-faster-whisper-base-en-model-bin",
+      "kind": "model",
+      "url": "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/model.bin",
+      "sha256": "2a166925539a16005f14ff328359f9b9adb9dc4fb631bb3b227526862e93e2ef",
+      "size": 145216508,
+      "destination": "runtime/asr/base.en/model.bin",
+      "urls": [
+        "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/model.bin",
+        "https://hf-mirror.com/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/model.bin"
+      ]
+    },
+    {
+      "id": "model-systran-faster-whisper-base-en-tokenizer-json",
+      "kind": "model",
+      "url": "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/tokenizer.json",
+      "sha256": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+      "size": 2128466,
+      "destination": "runtime/asr/base.en/tokenizer.json",
+      "urls": [
+        "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/tokenizer.json",
+        "https://hf-mirror.com/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/tokenizer.json"
+      ]
+    },
+    {
+      "id": "model-systran-faster-whisper-base-en-vocabulary-txt",
+      "kind": "model",
+      "url": "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/vocabulary.txt",
+      "sha256": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf",
+      "size": 422309,
+      "destination": "runtime/asr/base.en/vocabulary.txt",
+      "urls": [
+        "https://huggingface.co/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/vocabulary.txt",
+        "https://hf-mirror.com/Systran/faster-whisper-base.en/resolve/3d3d5dee26484f91867d81cb899cfcf72b96be6c/vocabulary.txt"
+      ]
+    },
+    {
+      "id": "model-xenova-multilingual-e5-small-readme-md",
+      "kind": "model",
+      "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/README.md",
+      "sha256": "561a19594636657fe033f8b4427a7743b5f6f3a12f16cecc5f286feca0453245",
+      "size": 1077,
+      "destination": "runtime/rag/models/multilingual-e5-small-int8/README.md",
+      "urls": [
+        "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/README.md",
+        "https://hf-mirror.com/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/README.md"
+      ]
+    },
+    {
+      "id": "model-xenova-multilingual-e5-small-config-json",
+      "kind": "model",
+      "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/config.json",
+      "sha256": "cb99455288675345e1a4f411438d5d0adbba5fbd3a67ea4fb03c015433b996c1",
+      "size": 658,
+      "destination": "runtime/rag/models/multilingual-e5-small-int8/config.json",
+      "urls": [
+        "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/config.json",
+        "https://hf-mirror.com/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/config.json"
+      ]
+    },
+    {
+      "id": "model-xenova-multilingual-e5-small-onnx-model-int8-onnx",
+      "kind": "model",
+      "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/onnx/model_int8.onnx",
+      "sha256": "4d24e2bc01a447951524466ef533e52944bf48509e6552810bcee1a2711cb02c",
+      "size": 118054593,
+      "destination": "runtime/rag/models/multilingual-e5-small-int8/onnx/model_int8.onnx",
+      "urls": [
+        "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/onnx/model_int8.onnx",
+        "https://hf-mirror.com/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/onnx/model_int8.onnx"
+      ]
+    },
+    {
+      "id": "model-xenova-multilingual-e5-small-tokenizer-json",
+      "kind": "model",
+      "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/tokenizer.json",
+      "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39",
+      "size": 17082730,
+      "destination": "runtime/rag/models/multilingual-e5-small-int8/tokenizer.json",
+      "urls": [
+        "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/tokenizer.json",
+        "https://hf-mirror.com/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/tokenizer.json"
+      ]
+    },
+    {
+      "id": "model-xenova-multilingual-e5-small-tokenizer-config-json",
+      "kind": "model",
+      "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/tokenizer_config.json",
+      "sha256": "a1d6bc8734a6f635dc158508bef000f8e2e5a759c7d92f984b2c86e5ff53425b",
+      "size": 443,
+      "destination": "runtime/rag/models/multilingual-e5-small-int8/tokenizer_config.json",
+      "urls": [
+        "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/tokenizer_config.json",
+        "https://hf-mirror.com/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/tokenizer_config.json"
+      ]
+    }
+  ],
+  "provenance": {
+    "resolvedAt": "2026-10-23T04:33:55.639765+00:00",
+    "nodeShasums": "https://nodejs.org/dist/latest-v24.x/SHASUMS256.txt",
+    "pythonRelease": "https://www.python.org/downloads/release/python-31317/",
+    "kokoroRelease": "https://github.com/thewh1teagle/kokoro-onnx/releases/expanded_assets/model-files-v1.1",
+    "huggingFaceRevisions": {
+      "onnx-community/Kokoro-82M-v1.0-ONNX": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+      "dropbox-dash/faster-whisper-large-v3-turbo": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+      "Systran/faster-whisper-base.en": "3d3d5dee26484f91867d81cb899cfcf72b96be6c",
+      "Xenova/multilingual-e5-small": "761b726dd34fb83930e26aab4e9ac3899aa1fa78",
+      "kanirudh/kokoro-82m-onnx": "be37f7d55632acf0b6b4a17eb4cf673c06dcebed"
+    }
+  }
+}

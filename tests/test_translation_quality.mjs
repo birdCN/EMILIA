@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import {translationIssues,polishTranslationIfNeeded} from '../translation-quality.mjs';
+const english="That lunch reminder still stands. Do you sit down for a meal or grab whatever's quickest?";
+const draft='午饭那件事还算数。你会坐下来吃，还是随便抓点最快的？';
+assert.equal(translationIssues(english,draft).length,2,'detect reminder-as-validity and literal grabbing in eating context');
+let calls=0;
+const natural='顺便再提醒一下，午饭别忘了吃。你会坐下来好好吃一顿，还是随便吃点省事的？';
+assert.equal(await polishTranslationIfNeeded(english,draft,async()=>{calls++;return natural;}),natural);
+assert.equal(calls,1);
+assert.equal(await polishTranslationIfNeeded("You're welcome.",'不客气。',async()=>{throw Error('ordinary translation must not call editor');}),'不客气。');
+assert.deepEqual(translationIssues('My offer still stands.','我之前的提议还算数。'),[],'offers can legitimately remain open');
+assert.deepEqual(translationIssues('Your ticket is still valid.','你的票仍然有效。'),[],'actual validity must not be rewritten as a reminder');
+assert.deepEqual(translationIssues('Grab your keys before you go.','出门前拿上钥匙。'),[],'grab is interpreted in context, not globally replaced');
+assert.equal(await polishTranslationIfNeeded(english,draft,async()=>{throw Error('provider unavailable');}),draft,'a background editing failure must not fail the spoken turn');
+assert.equal(await polishTranslationIfNeeded(english,draft,async()=>draft),draft,'one editing pass only, no retry loop');
+assert.equal(await polishTranslationIfNeeded(english,draft,async()=>'not a Chinese subtitle'),draft,'invalid edit must not replace an existing usable subtitle');
+assert.equal(await polishTranslationIfNeeded(english,draft,()=>new Promise(()=>{}),{timeoutMs:10}),draft,'a slow optional edit must not hold the turn open');
+const longEnglish="I'm not sure — you didn't tell me what you had yesterday, so I couldn't guess it honestly.";
+const stiff='我也不确定——你没告诉我昨天吃了什么，所以我没法老实猜出来。';
+let reviewCalls=0;
+assert.equal(await polishTranslationIfNeeded(longEnglish,stiff,async()=>{reviewCalls++;return '改稿';}),stiff,
+ 'length alone must not double the translation cost');
+assert.equal(reviewCalls,0);
+let cancelled=false;
+await polishTranslationIfNeeded(english,draft,({signal})=>new Promise(resolve=>signal.addEventListener('abort',()=>{cancelled=true;resolve(null);},{once:true})),{timeoutMs:5});
+assert.equal(cancelled,true,'the editing deadline must cancel its underlying job');
+console.log('PASS: contextual idiom checks, one optional edit, normal-call bypass and safe metadata fallback');

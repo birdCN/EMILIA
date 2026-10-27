@@ -1,0 +1,50 @@
+import assert from 'node:assert/strict';
+import {mkdtemp,mkdir,readdir,copyFile,readFile,writeFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join,resolve,sep} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawn} from 'node:child_process';
+import http from 'node:http';
+const root=fileURLToPath(new URL('..',import.meta.url)),fixture=await mkdtemp(join(tmpdir(),'emilia-browser-lifetime-'));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));let child,closed,logs='';const leases=[];
+const bootstrap=String.raw`
+const timers=new Set(),originalSet=setInterval,originalClear=clearInterval;
+globalThis.setInterval=(fn,delay,...args)=>{const timer=originalSet(fn,delay,...args);if(delay===15000)timers.add(timer);return timer;};
+globalThis.clearInterval=timer=>{timers.delete(timer);return originalClear(timer);};
+await import('./server.mjs');
+process.send({ownerToken:process.env.EMILIA_ASR_OWNER_TOKEN,ownerPort:process.env.EMILIA_ASR_OWNER_PORT});
+process.on('message',message=>{if(message==='timers')process.send({kind:'timers',count:timers.size,allUnref:[...timers].every(timer=>!timer.hasRef())});});
+`;
+try{
+ await mkdir(join(fixture,'public'));for(const name of await readdir(root))if(name.endsWith('.mjs')||name==='package.json')await copyFile(join(root,name),join(fixture,name));
+ for(const name of await readdir(join(root,'public')))if(/\.(js|html|css)$/.test(name))await copyFile(join(root,'public',name),join(fixture,'public',name));
+ await mkdir(join(fixture,'learner'),{recursive:true});await writeFile(join(fixture,'learner','retained-record.txt'),'synthetic local learning record');
+ const probe=http.createServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const port=probe.address().port;await new Promise(r=>probe.close(r));const origin=`http://127.0.0.1:${port}`;
+ child=spawn(process.execPath,['--input-type=module','-e',bootstrap],{cwd:fixture,windowsHide:true,env:{...process.env,IELTS_DEMO_PORT:String(port),IELTS_SKIP_WARMUP:'1',EMILIA_BROWSER_STARTUP_GRACE_MS:'0',IELTS_RUNTIME_ROOT:join(fixture,'runtime'),IELTS_LEARNER_DATA_ROOT:join(fixture,'learner'),IELTS_MODEL_CONFIG_PATH:join(fixture,'settings.json')},stdio:['ignore','pipe','pipe','ipc']});const ownerProof=new Promise(r=>child.once('message',r));closed=new Promise(r=>child.once('exit',(code,signal)=>r({code,signal})));child.stdout.on('data',x=>logs+=x);child.stderr.on('data',x=>logs+=x);
+ let ready=false;for(let i=0;i<100;i++){try{if((await fetch(origin+'/api/health')).ok){ready=true;break;}}catch{}await sleep(50);}assert.ok(ready,logs);
+ const {ownerToken,ownerPort}=await ownerProof;assert.match(ownerToken,/^[a-f0-9-]{36}$/);assert.equal(ownerPort,String(port));
+ const timerState=()=>new Promise(resolve=>{const listener=message=>{if(message.kind==='timers'){child.off('message',listener);resolve(message);}};child.on('message',listener);child.send('timers');});
+ assert.equal((await fetch(origin+'/api/internal/asr-owner')).status,403);
+ assert.equal((await fetch(origin+'/api/internal/asr-owner',{headers:{'X-Emilia-ASR-Owner':'wrong-owner'}})).status,403);
+ assert.deepEqual(await(await fetch(origin+'/api/internal/asr-owner',{headers:{'X-Emilia-ASR-Owner':ownerToken}})).json(),{ok:true});
+ assert.equal(JSON.stringify(await(await fetch(origin+'/api/health')).json()).includes(ownerToken),false);assert.equal(logs.includes(ownerToken),false);
+ const settingsHeaders={'X-Emilia-Settings':'1','Content-Type':'application/json'};const config=await(await fetch(origin+'/api/model/settings',{headers:settingsHeaders})).json();
+ assert.equal((await fetch(origin+'/api/model/settings',{method:'POST',headers:settingsHeaders,body:JSON.stringify({...config,mode:'api',provider:'custom',protocol:'openai',baseUrl:'http://127.0.0.1:1',model:'synthetic-retained-settings',apiKey:''})})).status,200);
+ const retainedSettings=await readFile(join(fixture,'settings.json'));
+ const lease=async(headers={'X-Emilia-Lifecycle':'1'})=>{const controller=new AbortController();const response=await fetch(origin+'/api/app/connection',{method:'POST',headers,signal:controller.signal});if(response.status===200)leases.push(controller);return {controller,response};};
+ assert.equal((await lease({})).response.status,403);
+ assert.equal((await lease({'X-Emilia-Lifecycle':'1',Origin:'https://example.invalid'})).response.status,403);
+ assert.equal((await lease({'X-Emilia-Lifecycle':'1','Sec-Fetch-Site':'cross-site'})).response.status,403);
+ assert.equal((await fetch(origin+'/api/app/connection')).status,405);
+ await sleep(100);assert.equal(child.exitCode,null,'rejected requests do not arm browser lifetime');
+ const first=await lease(),second=await lease();assert.equal(first.response.status,200);assert.equal(second.response.status,200);assert.match(first.response.headers.get('content-type'),/event-stream/);
+ assert.deepEqual(await timerState(),{kind:'timers',count:2,allUnref:true},'each stream needs an unreferenced server keepalive timer');
+ const reader=first.response.body.getReader();await reader.read();let keepaliveDeadline;
+ const keepalive=await Promise.race([reader.read(),new Promise((_,reject)=>{keepaliveDeadline=setTimeout(()=>reject(Error('No server SSE keepalive arrived')),16500);})]);clearTimeout(keepaliveDeadline);assert.match(new TextDecoder().decode(keepalive.value),/: keepalive/);
+ for(const resource of ['/', '/setup', '/assets/missing']){const response=await fetch(origin+resource);assert.equal(response.headers.get('content-security-policy'),"frame-ancestors 'self'");assert.equal(response.headers.get('x-frame-options'),'SAMEORIGIN');}
+ first.controller.abort();await sleep(250);assert.equal((await fetch(origin+'/api/health')).status,200);assert.equal((await timerState()).count,1,'closed stream clears its timer');
+ second.controller.abort();await sleep(250);assert.equal((await timerState()).count,0,'all detached timers are cleared');const replacement=await lease();assert.equal(replacement.response.status,200,'refresh reconnects inside grace');await sleep(100);assert.equal((await fetch(origin+'/api/health')).status,200);
+ const started=Date.now();replacement.controller.abort();await sleep(100);assert.equal((await fetch(origin+'/api/internal/asr-owner',{headers:{'X-Emilia-ASR-Owner':ownerToken}})).status,200,'owner probes must not retain browser lifetime');let deadline;const exit=await Promise.race([closed,new Promise((_,reject)=>{deadline=setTimeout(()=>reject(Error('Last browser close did not stop the backend: '+logs)),8500);})]);clearTimeout(deadline);assert.equal(exit.code,0,logs);assert.ok(Date.now()-started>=4500,'production 5-second grace remains in force');
+ assert.deepEqual(await readFile(join(fixture,'settings.json')),retainedSettings);assert.equal(await readFile(join(fixture,'learner','retained-record.txt'),'utf8'),'synthetic local learning record');
+ console.log(JSON.stringify({ok:true,lifetimeHttp:true,rejectedCrossSite:true,multipleTabs:true,reconnect:true,actualServerKeepalive:true,keepaliveTimersCleared:true,framingHeaders:true,shutdownMs:Date.now()-started,exit}));
+}finally{for(const lease of leases)lease.abort();if(child&&child.exitCode===null&&!child.killed){child.kill();await closed;}assert.ok(resolve(fixture).startsWith(resolve(tmpdir())+sep));await rm(fixture,{recursive:true,force:true,maxRetries:10,retryDelay:100});}

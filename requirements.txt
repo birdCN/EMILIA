@@ -1,0 +1,14 @@
+# Python 3.13; CPU baseline. Install GPU dependencies separately if desired.
+numpy==2.4.6
+soundfile==0.14.0
+onnxruntime==1.29.0
+kokoro-onnx==0.6.1
+faster-whisper==1.2.1
+# PyAV 19 removed metadata_errors, still used by faster-whisper 1.2.1.
+av==18.1.0
+tokenizers==0.23.2
+requests==2.34.2
+huggingface-hub==1.30.0
+espeakng-loader==0.2.4
+# Legacy optional Edge streaming endpoint; the default Kokoro path is local.
+edge-tts>=7,<8

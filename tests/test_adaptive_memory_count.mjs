@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {SemanticMemoryRetriever} from '../semantic-memory-retrieval.mjs';
+import {MaintainedMemory} from '../maintained-memory.mjs';
+const records=Array.from({length:7},(_,i)=>({id:'synthetic-'+i,key:'fixture.'+i,scope:'companion',kind:'fact',text:'Synthetic astronomy detail '+i,evidence:[],lastSeen:new Date().toISOString()}));
+const retriever=new SemanticMemoryRetriever({embedder:{embed:async texts=>texts.map(()=>[1,0])}});
+assert.equal((await retriever.retrieve(records,{query:'astronomy'})).length,7,'retrieve every eligible record');
+assert.equal((await retriever.retrieve(records.slice(0,1),{query:'astronomy'})).length,1);
+assert.equal((await retriever.retrieve(records,{query:'astronomy',limit:2})).length,2,'an explicit caller limit remains honored');
+const noMatch=new SemanticMemoryRetriever({embedder:{embed:async(texts,prefix)=>texts.map(()=>prefix==='query: '?[0,1]:[1,0])}});
+assert.equal((await noMatch.retrieve(records,{query:'unrelated'})).length,0,'never fill a quota with irrelevant facts');
+const broken=new SemanticMemoryRetriever({embedder:{embed:async()=>{throw Error('synthetic worker unavailable');}}});
+assert.equal((await broken.retrieve(records,{query:'Synthetic astronomy detail',explicitRecall:true})).length,7,'lexical fallback retains relevant records');
+const memory=new MaintainedMemory(new URL('../work/unused-adaptive-fixture.json',import.meta.url),{retriever});memory.state.records=records;
+const full=await memory.semanticSelection({query:'astronomy',budget:3000});assert.equal(full.sources.length,7);
+const bounded=await memory.semanticSelection({query:'astronomy',budget:550});assert.ok(bounded.context.length<=550);assert.ok(bounded.sources.length<7);
+console.log('PASS: semantic selection, explicit limits and context budgets');

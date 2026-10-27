@@ -1,0 +1,10 @@
+import {fileURLToPath} from 'node:url';
+import {join,resolve} from 'node:path';
+import {existsSync} from 'node:fs';
+export const PROJECT_ROOT=fileURLToPath(new URL('.',import.meta.url));
+export const RUNTIME_ROOT=process.env.IELTS_RUNTIME_ROOT?resolve(process.env.IELTS_RUNTIME_ROOT):join(PROJECT_ROOT,'runtime');
+export const TEMP_ROOT=join(RUNTIME_ROOT,'temp');
+export const HF_CACHE_ROOT=join(RUNTIME_ROOT,'cache','huggingface');
+export const PIP_CACHE_ROOT=join(RUNTIME_ROOT,'cache','pip');
+const bundledPython=join(RUNTIME_ROOT,'python','python.exe');
+export const PYTHON_EXECUTABLE=process.env.IELTS_PYTHON_PATH||(process.platform==='win32'&&existsSync(bundledPython)?bundledPython:join(PROJECT_ROOT,'.venv',process.platform==='win32'?'Scripts':'bin',process.platform==='win32'?'python.exe':'python'));

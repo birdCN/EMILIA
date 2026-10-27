@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import { attachVoicePlaylist } from '../public/voice-playlist.js';
+let current=true, ended=0, failures=0, plays=0;
+const audio={src:'', play:async()=>{plays++;}};
+attachVoicePlaylist(audio, ['/a.wav','/b.wav'], {isCurrent:()=>current,onEnded:()=>ended++,onError:()=>failures++});
+assert.equal(audio.src,'/a.wav');
+audio.onended(); await Promise.resolve();
+assert.equal(audio.src,'/b.wav'); assert.equal(plays,1); assert.equal(ended,0);
+audio.onended(); assert.equal(ended,1);
+attachVoicePlaylist(audio, ['/a.wav','/b.wav'], {isCurrent:()=>current,onEnded:()=>ended++,onError:()=>failures++});
+current=false; audio.onended(); assert.equal(plays,1,'interrupted audio must not start another segment');
+current=true;
+audio.play=async()=>{throw Error('failed tail');};
+audio.onended(); await new Promise(r=>setImmediate(r)); assert.equal(failures,1);
+console.log('playlist ordering, completion, interruption and failure tests passed');

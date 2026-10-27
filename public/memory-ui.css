@@ -1,0 +1,28 @@
+.memory-entry-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+.memory-entry-actions button,.memory-dialog button { border:1px solid #ddd5ec; border-radius:12px; padding:10px 14px; background:#f4f0fa; color:#554373; font:inherit; cursor:pointer; }
+.memory-entry-actions button:hover,.memory-dialog button:hover { background:#e9e0f6; }
+.memory-dialog { width:min(720px,calc(100vw - 32px)); box-sizing:border-box; max-height:88vh; border:1px solid #e2dced; border-radius:24px; padding:26px; color:#393147; background:#fcfbfe; box-shadow:0 24px 90px #29203a35; }
+.memory-dialog::backdrop { background:#25203070; backdrop-filter:blur(5px); }
+.memory-dialog header { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.memory-dialog h2 { margin:4px 0 12px; font-size:25px; }
+.memory-dialog header p { margin:0; color:#857496; font-size:12px; letter-spacing:.13em; }
+.memory-dialog small { color:#796e86; line-height:1.6; }
+.memory-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:18px 0; }
+.memory-tabs button[aria-pressed=true] { color:white; background:#7966a8; border-color:#7966a8; }
+.maintained-memory-card { border:1px solid #e5deee; border-radius:16px; padding:18px; margin:12px 0; background:white; overflow-wrap:anywhere; }
+.maintained-memory-card h3 { margin:0 0 12px; font-size:17px; }
+.memory-record-text { font-size:17px; line-height:1.6; margin:12px 0; }
+.memory-badge { display:inline-block; padding:4px 9px; border-radius:8px; background:#edf5f2; color:#447769; font-size:12px; }
+.maintained-memory-card details { margin:12px 0; font-size:13px; color:#796d86; }
+.maintained-memory-card summary { cursor:pointer; }
+.memory-record-actions { display:flex; gap:8px; }
+.memory-record-actions button { padding:6px 12px; font-size:13px; }
+.memory-editor textarea { box-sizing:border-box; width:100%; min-height:96px; resize:vertical; margin:12px 0; padding:10px; font:inherit; border:1px solid #c9bcdf; border-radius:10px; }
+.memory-editor button { margin-right:8px; }
+.memory-status { white-space:pre-wrap; line-height:1.6; padding:12px; border-radius:12px; background:#f1edf7; font-size:13px; }
+.memory-status[data-error=true] { color:#98464b; background:#fbefef; }
+.memory-dialog[aria-busy=true] .memory-status::before { content:''; display:inline-block; width:12px; height:12px; border:2px solid #cfc3e3; border-top-color:#77629e; border-radius:50%; margin-right:8px; animation:memory-spin .8s linear infinite; }
+.memory-empty { color:#81758d; line-height:1.8; }
+@keyframes memory-spin { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { .memory-dialog[aria-busy=true] .memory-status::before { animation:none; } }
+@media(max-width:520px) { .memory-dialog { padding:18px; } .memory-dialog h2 { font-size:22px; } }

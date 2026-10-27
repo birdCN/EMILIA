@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; }
+    #portrait, #fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #fallback { height: 158%; width: auto; left: 50%; transform: translateX(-50%); }
+    #portrait { opacity: 0; }
+    #portrait.ready { opacity: 1; }
+    #fallback.hidden { visibility: hidden; }
+  </style>
+</head>
+<body>
+  <img id="fallback" src="/assets/avatar-v3/neutral-ear-v22.png?v=1" onerror="this.onerror=null;this.src='/assets/avatar-v3/neutral-clean-v4.png'" alt="">
+  <canvas id="portrait" aria-hidden="true"></canvas>
+  <script type="module" src="/assets/emilia-performance-v4.js?v=22"></script>
+</body>
+</html>

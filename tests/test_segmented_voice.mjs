@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import { createSentenceVoice } from '../sentence-voice.mjs';
+let calls = [], resolveFirst;
+const voice = createSentenceVoice(text => {
+  calls.push(text);
+  if (calls.length === 1) return new Promise(r => resolveFirst = r);
+  return Promise.resolve({url:'/tail.wav'});
+});
+voice.observe('{"en":"This is the first sentence. Another');
+assert.deepEqual(calls, ['This is the first sentence.']);
+voice.observe('{"en":"This is the first sentence. Another sentence follows."}');
+assert.equal(calls.length, 1, 'only one speculative synthesis');
+const pending = voice.finish('This is the first sentence. Another sentence follows.');
+resolveFirst({url:'/first.wav',cached:false,synthesisMs:50});
+const result = await pending;
+assert.equal(result.voiceUrls.length, 2);
+assert.equal(new URL(result.voiceUrls[1], 'http://local').searchParams.get('text'), 'Another sentence follows.');
+assert.equal(result.url, '/first.wav');
+const changed = await voice.finish('This is a corrected full reply.');
+assert.equal(changed.voiceUrls, undefined, 'changed final text must not use stale first audio');
+assert.equal(calls.at(-1), 'This is a corrected full reply.');
+const failed = createSentenceVoice(async text => {
+  if (text === 'This is the first sentence.') throw Error('synthesis failure');
+  return {url:'/full.wav'};
+});
+failed.observe('{"en":"This is the first sentence. Another');
+assert.equal((await failed.finish('This is the first sentence. Another follows.')).url, '/full.wav');
+console.log('segmented synthesis tests passed');
+const legacyCalls=[];
+const legacy=createSentenceVoice(async text=>{legacyCalls.push(text);return {url:'/full.wav'};},{enabled:false});
+legacy.observe('{"en":"This is the first sentence. Another');
+assert.equal(legacyCalls.length,0,'old clients must not speculate or receive prefix-only audio');
+assert.equal((await legacy.finish('This is the first sentence. Another follows.')).voiceUrls,undefined);
+assert.deepEqual(legacyCalls,['This is the first sentence. Another follows.']);

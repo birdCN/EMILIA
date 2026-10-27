@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f0fb">
+  <link rel="icon" href="/assets/branding/emilia.ico">
+  <title>开始使用 · EMILIA</title>
+  <script type="module" src="/app-lifecycle.js"></script>
+  <link rel="stylesheet" href="/setup.css">
+  <script type="module" src="/setup.js"></script>
+</head>
+<body>
+  <main class="setup-shell">
+    <header class="brand"><span class="brand-mark" aria-hidden="true">e</span><span>EMILIA<small>你的英语口语练习伙伴</small></span></header>
+    <div class="setup-grid">
+      <aside class="welcome">
+        <p class="eyebrow">A LITTLE SETUP. A LOT TO SAY.</p>
+        <h1>准备好，<br>开口聊聊。</h1>
+        <p class="intro">接入你自己的 AI 服务，让 Emilia 陪你练习表达、整理反馈，慢慢说得更自在。</p>
+        <div class="local-note"><span aria-hidden="true">◎</span><div><strong>声音在本机处理</strong><p>语音识别和语音播放使用本地模型。对话文字会发送至你选择的 AI 服务商。</p></div></div>
+        <p class="cost-note">AI 服务需要你自己的账号和 API Key，费用由服务商收取。保存设置不会发送对话或测试请求。</p>
+      </aside>
+      <section class="setup-card" aria-label="接入 AI 服务">
+        <ol class="steps" aria-label="设置进度"><li id="stepOne" aria-current="step"><span>1</span>选择服务商</li><li id="stepTwo"><span>2</span>填写并保存</li></ol>
+        <form id="setupForm" autocomplete="off" novalidate>
+          <fieldset id="providerStep" disabled>
+            <legend>你想使用哪家 AI 服务？</legend>
+            <p class="hint">选你已有账号的服务商，或选择兼容服务。</p>
+            <label for="provider">AI 服务商</label>
+            <select id="provider" name="provider" required></select>
+            <a id="providerWebsite" class="provider-link" target="_blank" rel="noopener noreferrer" hidden>打开服务商官网 ↗</a>
+            <p class="hint" id="providerHint">在服务商控制台创建 API Key，并确认账号可用余额和可调用模型。</p>
+            <button id="nextStep" class="primary" type="button">下一步 <span aria-hidden="true">→</span></button>
+          </fieldset>
+          <fieldset id="credentialsStep" hidden>
+            <legend>填写你的接入信息</legend>
+            <p class="hint" id="selectedProvider"></p>
+            <label for="model">模型名称 / ID</label>
+            <input id="model" name="model" maxlength="180" placeholder="填写服务商控制台中的模型 ID" required spellcheck="false" autocapitalize="off">
+            <p class="hint">使用服务商提供的模型 ID；不同账号可用模型可能不同。</p>
+            <label for="apiKey">API Key</label>
+            <input id="apiKey" name="apiKey" type="password" maxlength="4096" autocomplete="new-password" placeholder="粘贴你自己的 API Key" spellcheck="false" autocapitalize="off">
+            <p class="hint" id="keyHint">密钥由 Windows 加密保存在这台电脑，不保存在浏览器中。</p>
+            <details id="advancedSettings"><summary>高级设置：接口地址与协议</summary>
+              <label for="baseUrl">API 接口地址（Base URL）</label>
+              <input id="baseUrl" name="baseUrl" type="url" placeholder="https://…/v1" spellcheck="false" autocapitalize="off" required>
+              <p class="hint" id="addressHint">使用官方地址。其他地区或自建服务请按服务商文档修改。</p>
+              <label for="protocol">接口协议</label>
+              <select id="protocol" name="protocol"><option value="openai">OpenAI 兼容（Chat Completions）</option><option value="anthropic">Anthropic Messages</option></select>
+            </details>
+            <div class="actions"><button id="previousStep" type="button" class="secondary">上一步</button><button id="saveSettings" class="primary" type="submit">保存设置</button></div>
+            <p class="save-note">仅保存配置，不验证密钥，也不会产生测试费用。</p>
+          </fieldset>
+        </form>
+        <div id="setupDone" class="done" hidden tabindex="-1">
+          <span class="done-mark" aria-hidden="true">✓</span>
+          <h2>设置已保存</h2>
+          <p>密钥和模型尚未验证。开始练习后会调用你选择的 AI 服务，可能产生 API 费用。</p>
+          <a id="startPractice" class="primary" href="/">进入练习 <span aria-hidden="true">→</span></a>
+          <a class="edit-link" href="/setup">修改接入信息</a>
+        </div>
+        <p id="setupStatus" role="status" aria-live="polite">正在读取本机设置…</p>
+        <button id="retryLoad" class="secondary" type="button" hidden>重新读取设置</button>
+        <noscript>请启用浏览器 JavaScript，以保存 AI 服务设置。</noscript>
+      </section>
+    </div>
+    <footer>Emilia · 本地学习档案 · MIT 开源许可</footer>
+  </main>
+</body>
+</html>

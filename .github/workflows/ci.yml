@@ -1,0 +1,44 @@
+name: Checks and Windows build
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Prepare headless browser checks
+        shell: pwsh
+        run: |
+          $browserTools = Join-Path $env:RUNNER_TEMP 'emilia-browser-tests'
+          npm install --prefix $browserTools --no-audit --no-fund --ignore-scripts playwright@1.62.1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Add-Content -Path $env:GITHUB_ENV -Value "EMILIA_TEST_PYTHON=$((Get-Command python).Source)" -Encoding utf8
+          $modulePath = Join-Path $browserTools 'node_modules/playwright/index.mjs'
+          Add-Content -Path $env:GITHUB_ENV -Value "EMILIA_PLAYWRIGHT_MODULE=$(([Uri]$modulePath).AbsoluteUri)" -Encoding utf8
+          $browser = Join-Path ${env:ProgramFiles(x86)} 'Microsoft/Edge/Application/msedge.exe'
+          if (!(Test-Path -LiteralPath $browser)) { $browser = Join-Path $env:ProgramFiles 'Google/Chrome/Application/chrome.exe' }
+          if (!(Test-Path -LiteralPath $browser)) { throw 'A Chromium browser is required on the Windows runner.' }
+          Add-Content -Path $env:GITHUB_ENV -Value "EMILIA_BROWSER_EXECUTABLE=$browser" -Encoding utf8
+      - name: Application and headless browser checks
+        run: npm test
+      - name: Native installer and process ownership checks
+        run: node --test installer/tests/*.test.mjs
+      - name: Python worker ownership checks
+        run: python -m unittest discover -s installer/tests -p test_process_owner.py -v
+      - name: Build Windows installer
+        shell: powershell
+        run: installer/build.ps1

@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f0ff">
+  <link rel="icon" type="image/x-icon" href="/assets/branding/emilia.ico">
+  <title>EMILIA · English Coach</title>
+  <script type="module" src="/app-lifecycle.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/studio-v11.css?v=40">
+  <link rel="stylesheet" href="/model-settings.css?v=49-model-picker-1">
+  <link rel="stylesheet" href="/memory-ui.css?v=51">
+  <link rel="stylesheet" href="/vocabulary-helper.css?v=49">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span>e</span></div>
+        <div>
+          <div class="brand-line">EMILIA <span id="buildVersion">V1.3</span></div>
+          <p>你的长期雅思听说教练</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="small-ghost" id="openModelSettings" type="button">模型设置 ⚙</button>
+        <button class="status-pill" id="codexStatus" type="button" title="检测本机 Codex 登录">
+          <i></i><span>检测 Codex</span>
+        </button>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="切换氛围">☼</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="coach-panel panel">
+        <div class="scene-top">
+          <div class="session-label"><span class="live-dot"></span> FACE TO FACE</div>
+          <button class="small-ghost" id="motionToggle" type="button">动作：开</button>
+        </div>
+
+        <div class="avatar-stage" id="avatarStage">
+          <img class="room-backdrop" src="/assets/room/emilia-bedroom-v1.webp" alt="" aria-hidden="true" fetchpriority="high" draggable="false">
+          <div id="avatarRig" class="avatar-rig art-rig listening" role="img" aria-label="实时参数驱动的爱蜜莉亚上半身模型">
+            <iframe
+              id="live2dFrame"
+              class="live2d-frame"
+              src="/assets/emilia-performance-v4.runtime.html?v=22"
+              title="实时参数与表演状态驱动的爱蜜莉亚上半身模型"
+              tabindex="-1"
+              aria-hidden="true"
+            ></iframe>
+          </div>
+
+          <div class="state-badge" id="stateBadge" role="status"><span>●</span> 在听你说</div>
+        </div>
+          <button type="button" class="voice-retry-button" id="voiceRetryButton" hidden>▶ 点击播放 Emilia 的声音</button>
+          <div class="subtitle-card" id="subtitleCard">
+            <span class="subtitle-caption">EMILIA SAYS</span>
+            <p class="subtitle-en" id="subtitleEn">…</p>
+            <p class="subtitle-zh" id="subtitleZh">Emilia 正在想和你聊什么…</p>
+          </div>
+        <div class="scene-footer">
+          <div>
+            <strong>Emilia · 和你面对面</strong>
+            <span>认真听你说，陪你一点点进步。</span>
+          </div>
+          <button class="small-ghost" id="performancePreview" type="button">人物状态 ↗</button>
+        </div>
+      </section>
+
+      <section class="conversation-panel panel">
+        <div class="conversation-header">
+          <div>
+            <span class="eyebrow">YOUR SPACE · SPEAK & LISTEN</span>
+            <h1 id="sessionTitle">先聊两句，再开始训练</h1>
+            <div class="lesson-clock" id="lessonClock" role="timer" aria-live="polite" hidden>
+              <span><em>本课主题</em><strong id="lessonCoreTitle">—</strong></span>
+              <i></i>
+              <span id="lessonElapsed">已上课 00:00</span>
+              <b id="lessonRemaining">剩余 30:00</b>
+              <button id="lessonClockFinish" type="button" hidden>总结并归档</button>
+            </div>
+          </div>
+          <div class="header-controls">
+            <label class="select-control">
+              <span>模式</span>
+              <select id="sessionMode">
+                <option value="speaking">口语优先</option>
+                <option value="listening">听力优先</option>
+                <option value="balanced">听说综合</option>
+                <option value="casual">只聊一会儿</option>
+              </select>
+            </label>
+            <label class="toggle-control" title="隐藏后仍可随时打开">
+              <input id="subtitleToggle" type="checkbox" checked>
+              <span></span>
+              字幕
+            </label>
+            <label class="toggle-control" title="只控制中文译文，英文字幕不受影响">
+              <input id="translationToggle" type="checkbox" checked>
+              <span></span>
+              中文翻译
+            </label>
+          </div>
+        </div>
+
+        <div class="progress-strip">
+          <div class="progress-step active" id="progressWarmup"><b>1</b><span>自然热身</span></div>
+          <i></i>
+          <div class="progress-step" id="progressAssessment"><b>2</b><span>能力探测</span></div>
+          <i></i>
+          <div class="progress-step" id="progressPractice"><b>3</b><span>针对练习</span></div>
+        </div>
+
+        <section class="session-brief" id="lessonRecoveryNotice" aria-labelledby="lessonRecoveryTitle" hidden>
+          <strong id="lessonRecoveryTitle">上次课堂尚未归档</strong>
+          <p id="lessonRecoveryDescription"></p>
+          <div class="lesson-actions">
+            <button class="primary-button" id="recoverInterruptedLesson" type="button" hidden>继续上次课堂</button>
+            <button class="finish-lesson" id="discardInterruptedLesson" type="button" hidden>放弃恢复记录</button>
+          </div>
+        </section>
+
+        <div id="activityStatus" class="activity-status" data-activity-view role="status" aria-live="polite" hidden>
+          <i class="activity-spinner" aria-hidden="true"></i>
+          <div><strong data-activity-title></strong><small data-activity-detail></small></div>
+          <span data-activity-time aria-hidden="true"></span>
+        </div>
+        <div id="temporaryChatRecovery" class="lesson-recovery-notice" hidden role="status">
+          <p>上次还有未整理的聊天。临时记录在本机保留 24 小时，可以继续，或明确放弃。</p>
+          <button id="resumeTemporaryChat" type="button">继续上次聊天</button>
+          <button id="discardTemporaryChat" type="button">放弃临时聊天</button>
+        </div>
+        <div class="chat" id="chat" aria-live="polite">
+          <article class="message coach-message" id="openingMessage" aria-busy="true">
+            <div class="mini-avatar">E</div>
+            <div>
+              <span class="speaker">Emilia · 刚刚</span>
+              <div class="bubble">
+                <button class="replay-speech" type="button" aria-label="重新朗读" disabled>▶</button>
+                <p>…</p>
+                <small>正在临场想一句真正想和你说的话…</small>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="quick-replies" id="quickReplies" style="display:none">
+          <button type="button">Pretty good, actually.</button>
+          <button type="button">A little tiring.</button>
+          <button type="button">Let me think…</button>
+        </div>
+
+        <div class="composer">
+          <button class="mic-button" id="micButton" type="button" aria-label="开始语音输入">
+            <span class="mic-icon">●</span>
+            <span class="mic-label">开始说话</span>
+          </button>
+          <button class="discard-speech" id="discardSpeechButton" type="button" aria-label="删除本次语音输入" hidden>
+            × 删除本次
+          </button>
+          <div class="text-entry">
+            <input id="messageInput" type="text" autocomplete="off" placeholder="也可以先打字回答…">
+            <button id="sendButton" type="button" aria-label="发送">↑</button>
+          </div>
+        </div>
+        <p class="privacy-note">结束录音 → 本地识别 → 修改或删除 → 确认发送。录音不保存。正式课堂已完成的对话会临时保存用于恢复，归档或明确放弃后删除；未整理闲聊的临时恢复记录在本机保留 24 小时，整理或放弃后删除。长期学习记忆在归档时核对更新。</p>
+      </section>
+
+      <nav class="tool-rail" aria-label="学习工具">
+        <button class="tool-trigger active" type="button" data-tool="profile" aria-label="能力画像"><span>◇</span><em>画像</em></button>
+        <button class="tool-trigger" type="button" data-tool="lesson" aria-label="本节课程"><span>⌁</span><em>课程</em></button>
+        <button class="tool-trigger" type="button" data-tool="memory" aria-label="长期记忆"><span>◎</span><em>记忆</em></button>
+        <button class="tool-trigger" type="button" data-tool="pronunciation" aria-label="发音体检"><span>◌</span><em>发音</em></button>
+        <button class="tool-trigger" type="button" data-tool="performance" aria-label="人物动作"><span>✧</span><em>人物</em></button>
+        <button class="tool-trigger" type="button" id="openVocabularyHelper" aria-label="用中文找英文词语" aria-controls="vocabularyHelper" aria-expanded="false"><span>Aa</span><em>找词</em></button>
+      </nav>
+
+      <section class="vocabulary-helper" id="vocabularyHelper" role="region" aria-labelledby="vocabularyTitle" hidden>
+        <header>
+          <div><p class="vocabulary-eyebrow">FIND THE WORD</p><h2 id="vocabularyTitle">这个意思，怎么说？</h2></div>
+          <button type="button" id="closeVocabularyHelper" aria-label="关闭找词面板">×</button>
+        </header>
+        <form id="vocabularyForm">
+          <label for="vocabularyIntent">用中文说说你想表达什么</label>
+          <textarea id="vocabularyIntent" rows="2" maxlength="240" placeholder="例如：本来决定去了，后来临时改变主意" autocomplete="off"></textarea>
+          <button class="primary-button" id="vocabularyLookup" type="submit">帮我找词</button>
+        </form>
+        <p class="vocabulary-context-note" id="vocabularyContextNote">中文意思和最近 3 轮已发送对话会交给当前配置的服务商帮助选词；不发送未提交的草稿或录音原音。</p>
+        <p class="vocabulary-headphones" id="vocabularyHeadphones">录音中也能查词和听发音。建议戴耳机，避免播放声音被麦克风录入。</p>
+        <p class="vocabulary-status" id="vocabularyStatus" role="status" aria-live="polite">用中文描述你想表达的意思。</p>
+        <button class="finish-lesson" id="vocabularyRetry" type="button" hidden>重试找词</button>
+        <div class="vocabulary-result" id="vocabularyResult" hidden>
+          <div class="vocabulary-term-row">
+            <button id="vocabularyTerm" type="button" aria-pressed="false"></button>
+            <button id="vocabularyPronounce" type="button" aria-label="播放单词发音" aria-pressed="false">▶</button>
+          </div>
+          <span id="vocabularyPartOfSpeech"></span>
+          <p id="vocabularyMeaning"></p>
+          <p class="vocabulary-example-label">例句</p>
+          <p id="vocabularyExample"></p>
+          <p id="vocabularyAudioStatus" role="status" aria-live="polite"></p>
+          <small id="vocabularyReviewNote"></small>
+        </div>
+      </section>
+
+      <button class="drawer-backdrop" id="drawerBackdrop" type="button" aria-label="关闭工具面板"></button>
+      <aside class="insight-panel tool-drawer" id="toolDrawer" aria-hidden="true" inert role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+        <div class="drawer-head">
+          <div><span class="eyebrow">LEARNING STUDIO</span><strong id="drawerTitle">动态能力画像</strong></div>
+          <button id="drawerClose" type="button" aria-label="关闭">×</button>
+        </div>
+
+        <div id="drawerActivity" class="activity-status" data-activity-view role="status" aria-live="polite" hidden>
+          <i class="activity-spinner" aria-hidden="true"></i>
+          <div><strong data-activity-title></strong><small data-activity-detail></small></div>
+          <span data-activity-time aria-hidden="true"></span>
+        </div>
+        <section class="profile-card panel tool-panel active" data-tool-panel="profile">
+          <div class="card-heading">
+            <div>
+              <span class="eyebrow">动态能力画像</span>
+              <h2>稳定估计，不追涨杀跌</h2>
+            </div>
+          </div>
+          <div class="band-row">
+            <div class="band-score"><strong id="bandScore">—</strong><span id="bandRange">等待测评</span></div>
+            <div class="band-arrow">→</div>
+            <div class="band-target"><strong id="bandTarget">—</strong><span>阶段目标</span></div>
+          </div>
+          <div class="skill-bars">
+            <div data-dimension="fluencyCoherence"><span>流利与连贯</span><i><b style="--value:0%"></b></i><em>—</em></div>
+            <div data-dimension="lexicalResource"><span>词汇资源</span><i><b style="--value:0%"></b></i><em>—</em></div>
+            <div data-dimension="grammaticalRangeAccuracy"><span>语法范围</span><i><b style="--value:0%"></b></i><em>—</em></div>
+            <div data-dimension="pronunciationIntelligibility"><span>发音可懂度</span><i><b style="--value:0%"></b></i><em>待采样</em></div>
+            <div data-dimension="listening"><span>听力细节</span><i><b style="--value:0%"></b></i><em>—</em></div>
+          </div>
+          <div class="assessment-actions">
+            <button class="assessment-button" id="assessmentButton" type="button">开始入门测评</button>
+            <button class="profile-reset" id="assessmentReportButton" type="button" hidden>查看反馈</button>
+            <button class="profile-reset" id="resetProfileButton" type="button">清空</button>
+          </div>
+          <p class="assessment-status" id="assessmentStatus">尚未建立能力证据</p>
+          <p class="demo-disclaimer">这里显示保守的能力区间，会随跨课表现缓慢调整；它不是官方雅思成绩。</p>
+        </section>
+
+        <section class="lesson-card panel tool-panel" data-tool-panel="lesson">
+          <div class="card-heading lesson-title-row">
+            <div>
+              <span class="eyebrow">课前编译器</span>
+              <h2>今天的 30 分钟</h2>
+            </div>
+            <select id="lessonDuration" aria-label="课程时长">
+              <option value="30">30 分钟 · 标准课</option>
+              <option value="60">1 小时 · 深入练习</option>
+            </select>
+          </div>
+          <div class="lesson-source">
+            <span id="lessonSource">本地示例计划</span>
+            <button id="codexLessonButton" type="button" hidden>预览画像计划</button>
+          </div>
+          <div id="lessonPlan" class="lesson-plan"></div>
+          <div class="teacher-cycle"><span>01 课前读记忆</span><span>02 短教案引导</span><span>03 课后再更新</span></div>
+          <div class="session-brief" id="sessionBrief" hidden></div>
+          <div class="lesson-actions">
+            <button class="primary-button" id="startLesson" type="button">读取记忆并开始 <span>→</span></button>
+            <button class="finish-lesson" id="finishLesson" type="button" hidden>结束并归档</button>
+          </div>
+          <p class="quota-note">实时聊天、备课和课后记忆整理使用当前配置的模型额度。课后会先提取、再复核，不影响实时回复。</p>
+        </section>
+        <section class="performance-card panel tool-panel" data-tool-panel="performance">
+          <span class="eyebrow">CHARACTER STUDIO</span>
+          <h2>回应，也是一种表演</h2>
+          <p class="studio-intro">Cubism 测试版的眼睛效果未通过验收，正在重做眼型与视线。当前暂用上一版人物，课堂与声音保持不变。</p>
+          <div id="gestureButtons" class="gesture-grid">
+            <button type="button" data-gesture="think">好奇追问<span>侧首 / 眉眼回应</span></button>
+            <button type="button" data-gesture="comfort">温柔安慰<span>放缓 / 柔和目光</span></button>
+            <button type="button" data-gesture="encourage">点头鼓励<span>肯定尝试 / 节奏回应</span></button>
+            <button type="button" data-gesture="celebrate">开心回应<span>抬头 / 明快点头</span></button>
+            <button type="button" data-gesture="listen">恢复倾听<span>回到自然状态</span></button>
+          </div>
+          <p id="gestureStatus" class="gesture-status" role="status">爱蜜莉亚 · 跟随语音与表情状态。</p>
+          <p class="demo-disclaimer">表情、动作与口型会随对话和语音变化。</p>
+        </section>
+
+        <section class="memory-card panel tool-panel" data-tool-panel="memory">
+          <div class="card-heading">
+            <div>
+              <span class="eyebrow">选择性记忆</span>
+              <h2 id="memoryTitle">尚无有效记忆</h2>
+            </div>
+            <button class="text-button" id="memoryInfo" type="button">怎么维护？</button>
+          </div>
+          <ul class="memory-list" id="memoryList">
+            <li class="watch"><span>待建立</span><p>完成入门测评后只保留必要证据</p></li>
+          </ul>
+          <div class="memory-entry-actions">
+            <button id="openMemoryManager" type="button">查看与修正记忆</button>
+            <button id="finishCompanionChat" type="button">结束聊天并整理</button>
+          </div>
+          <p class="panel-note">正式课堂结束时同时整理两类记忆；日常闲聊请手动结束并整理。临时聊天在本机保留 24 小时用于恢复，整理或放弃后删除。</p>
+        </section>
+
+        <section class="pronunciation-card panel tool-panel" data-tool-panel="pronunciation">
+          <div class="card-heading">
+            <div>
+              <span class="eyebrow">长文本声学采样</span>
+              <h2>读完一篇，再综合分析</h2>
+            </div>
+            <span class="confidence" id="pronunciationConfidence">等待采样</span>
+          </div>
+          <div class="pronunciation-guide">
+            <span id="pronunciationPassageTitle">正在准备朗读文本…</span>
+            <p id="pronunciationPassage">请保持自然音量，像给朋友朗读一样完成整段，不必刻意模仿口音。</p>
+          </div>
+          <div class="pronunciation-progress">
+            <i><b id="pronunciationTimerBar"></b></i>
+            <span id="pronunciationTimer">目标约 60 秒</span>
+          </div>
+          <div class="pronunciation-actions">
+            <button class="assessment-button" id="pronunciationRecordButton" type="button">开始朗读</button>
+            <button class="profile-reset" id="pronunciationDiscardButton" type="button" hidden>删除</button>
+            <button class="primary-button" id="pronunciationAnalyzeButton" type="button" disabled>分析本次</button>
+          </div>
+          <div class="pronunciation-report" id="pronunciationReport" hidden></div>
+          <p class="demo-disclaimer">只保存统计摘要，不保存录音或逐字稿。结果衡量可懂度、语速、停顿和语调证据，不评价是否像母语者，也不冒充官方雅思分。</p>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <dialog class="model-dialog" id="modelSettingsDialog" aria-labelledby="modelSettingsTitle">
+    <header><div><span class="eyebrow">CONNECTION · YOUR CHOICE</span><h2 id="modelSettingsTitle">选择她的对话模型</h2></div><button id="closeModelSettings" type="button" aria-label="关闭模型设置">×</button></header>
+    <form id="modelSettingsForm" autocomplete="off">
+      <label>接入方式<select name="mode"><option value="codex">Codex · 使用本机会员登录</option><option value="api">API · 使用自己的服务商密钥</option></select></label>
+      <p id="codexSettingsInfo">沿用当前 Codex 模型，不开启 Fast。无需填写 API Key。聊天、测评、备课和课后总结使用 Codex。</p>
+      <div id="apiSettingsFields" hidden>
+        <label>服务商<select name="provider"></select></label>
+        <a id="providerWebsite" target="_blank" rel="noopener noreferrer">获取 API 密钥 ↗</a>
+        <label>API Key<input name="apiKey" type="password" autocomplete="new-password" spellcheck="false" maxlength="4096"></label>
+        <small id="modelKeyNote"></small>
+        <div class="model-row"><label>模型 ID<input name="model" spellcheck="false" placeholder="从下方列表选择，或手动填写"></label><button id="loadApiModels" type="button">读取模型列表</button></div>
+        <label id="modelPicker" hidden>服务商返回的模型<select id="modelOptions" aria-label="服务商返回的模型"></select></label>
+        <details id="modelAdvanced"><summary>高级设置 · 地址、协议与推理</summary>
+          <label>API Base URL<input name="baseUrl" type="url" spellcheck="false" placeholder="https://你的接口地址/v1"></label>
+          <p id="providerAddressHint"></p>
+          <label>接口协议<select name="protocol"><option value="openai">OpenAI 兼容 · Chat Completions</option><option value="anthropic">Anthropic · Messages</option></select></label>
+          <label class="model-check"><input name="disableThinking" type="checkbox" checked>关闭额外思考（仅已适配的 DeepSeek / 千问官方接口）</label>
+          <label class="model-check"><input name="clearKey" type="checkbox">清除已保存密钥（可同时切回 Codex）</label>
+          <p>支持上述协议的流式文本及 JSON 输出，不代表所有厂商的专有接口都兼容。模型权限、地区与计费取决于你的账号。</p>
+        </details>
+        <p class="model-private-note">API 模式下，聊天、测评、备课和课后总结会把所需文本发送给所选服务商，单独按 API 计费。录音识别与语音合成仍在本机。密钥由 Windows 当前用户加密保存在 E 盘后台，不存入浏览器。</p>
+      </div>
+      <p id="modelSettingsResult" role="status" aria-live="polite"></p>
+      <footer><button id="testApiModel" type="button">测试 API 连接</button><button type="submit">保存并应用</button></footer>
+    </form>
+  </dialog>
+  <script src="/app.js" type="module"></script>
+  <dialog class="memory-dialog" id="memoryDialog" aria-labelledby="memoryDialogTitle">
+    <header><div><p>GROWING TOGETHER</p><h2 id="memoryDialogTitle">她正在怎样了解你</h2></div><button id="closeMemoryManager" type="button" aria-label="关闭记忆面板">关闭</button></header>
+    <small id="memorySummary">读取中…</small>
+    <div class="memory-tabs" role="group" aria-label="记忆分类">
+      <button type="button" data-memory-scope="companion" aria-pressed="true">相处与偏好</button>
+      <button type="button" data-memory-scope="teacher" aria-pressed="false">教师记忆</button>
+      <button type="button" data-memory-scope="episode" aria-pressed="false">共同经历</button>
+      <button type="button" data-memory-scope="persona" aria-pressed="false">她的偏好</button>
+      <button type="button" id="refreshMemoryManager">刷新</button>
+    </div>
+    <p id="memoryStatus" class="memory-status" role="status" aria-live="polite"></p>
+    <p id="memoryUsage" class="panel-note"></p>
+    <div id="maintainedMemoryList"></div>
+  </dialog>
+</body>
+</html>

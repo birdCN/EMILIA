@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import * as fields from '../public/stream-fields.js';
+assert.equal(typeof fields.firstSpeechSentence, 'function', 'streaming sentence selector is required');
+const pick = fields.firstSpeechSentence;
+assert.equal(pick('Sure. "I used to swim" means a past habit. "I am used to swimming" means familiarity.'), 'Sure. "I used to swim" means a past habit.');
+assert.equal(pick('Sure — "Although it rained, we walked." That is a contrast.'), 'Sure — "Although it rained, we walked."');
+assert.equal(pick('I met Dr. Smith today. We talked.'), 'I met Dr. Smith today.');
+assert.equal(pick('It costs 3.5 dollars. That is cheap.'), 'It costs 3.5 dollars.');
+assert.equal(pick('This sentence is incomplete'), null);
+assert.equal(fields.partialEnglishField('{"en":"Hello there. How are'), 'Hello there. How are');
+assert.equal(fields.partialEnglishField('{"en":"Say \\"hello\\".'), 'Say "hello".');
+assert.equal(fields.partialEnglishField('{"other":"fake en: hi","en":"Real English here.'), null);
+assert.equal(fields.partialEnglishField('{"en":"Hello there.\\'), 'Hello there.');
+assert.equal(fields.partialEnglishField('```json\n{"en":"Tea makes a peaceful start. Then'), 'Tea makes a peaceful start. Then','a formatting wrapper must not delay prefix synthesis');
+assert.equal(fields.completedJsonField('```json\n{"en":"A useful answer."}\n```','en'),'A useful answer.');
+console.log('sentence extraction tests passed');
